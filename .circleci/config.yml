@@ -230,12 +230,12 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure  
 
-  cloudfront-update:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      # Checkout code from git
-      - checkout
+  # cloudfront-update:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     # Checkout code from git
+  #     - checkout
       # - run:
       #     name: Install dependencies
       #     command: |
@@ -294,7 +294,7 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update:
-          requires: [smoke-test]
-      - cleanup:
-          requires: [cloudfront-update]
+      # - cloudfront-update:
+      #     requires: [smoke-test]
+      # - cleanup:
+      #     requires: [cloudfront-update]
