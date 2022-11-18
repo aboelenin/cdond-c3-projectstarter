@@ -105,7 +105,7 @@ jobs:
                 cd backend
                 npm install
                 # npm run test
-                npm test
+                npm test  
             
   scan-frontend:
     docker:
@@ -120,6 +120,12 @@ jobs:
       - restore_cache:
           keys:     
             - front-build
+      - run:
+          name: fix front-end audit
+          command: | 
+            npm audit fix --audit-level=critical --force
+            # If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
+            npm audit --audit-level=critical
       - run: 
           name: scan front-end
           command: |
@@ -140,6 +146,12 @@ jobs:
       - restore_cache:
           keys:     
             - backend-build
+      - run:
+          name: fix back-end audit
+          command: | 
+            npm audit fix --audit-level=critical --force
+            # If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
+            npm audit --audit-level=critical
       - run: 
           name: scan front-end
           command: |
