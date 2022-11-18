@@ -75,6 +75,8 @@ jobs:
       # Checkout code from git
       # Restore from cache
       # Your job code here
+      - checkout
+      - run: node --version
                 
   test-backend:
     docker:
