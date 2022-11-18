@@ -201,6 +201,7 @@ jobs:
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
+       - image: cimg/python:3.11.0
     steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
