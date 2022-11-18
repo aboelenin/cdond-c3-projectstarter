@@ -80,7 +80,7 @@ jobs:
           keys:     
             - frontend-build
       - run: 
-          name: Build front-end
+          name: test front-end
           command: |
                 cd frontend
                 npm test
@@ -94,7 +94,14 @@ jobs:
       # Restore from cache
       # Your job code here
       - checkout
-      - run: node --version
+      - restore_cache:
+          keys:     
+            - backend-build
+      - run: 
+          name: test front-end
+          command: |
+                cd backend
+                npm test
             
   scan-frontend:
     docker:
@@ -106,7 +113,16 @@ jobs:
       # Restore from cache
       # Your job code here
       - checkout
-      - run: node --version
+      - restore_cache:
+          keys:     
+            - front-build
+      - run: 
+          name: scan front-end
+          command: |
+                cd frontend
+                npm install
+                # npm install oauth-sign@^0.9.0
+                npm audit --audit-level=critical
 
   scan-backend:
     docker:
@@ -117,7 +133,16 @@ jobs:
       # Restore from cache
       # Your job code here
       - checkout
-      - run: node --version
+      - restore_cache:
+          keys:     
+            - backend-build
+      - run: 
+          name: scan front-end
+          command: |
+                cd backend
+                npm install
+                # npm install oauth-sign@^0.9.0
+                npm audit --audit-level=critical
 
   deploy-infrastructure:
     docker:
