@@ -83,7 +83,9 @@ jobs:
           name: test front-end
           command: |
                 cd frontend
-                npm test
+                npm install
+                npm run test
+                # npm test
                 
   test-backend:
     docker:
@@ -98,10 +100,12 @@ jobs:
           keys:     
             - backend-build
       - run: 
-          name: test front-end
+          name: test back-end
           command: |
                 cd backend
-                npm test
+                npm install
+                npm run test
+                # npm test
             
   scan-frontend:
     docker:
