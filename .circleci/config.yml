@@ -70,6 +70,7 @@ jobs:
   test-frontend:
     docker:
       # Docker image here
+      - image: cimg/node:19.0.1
     steps:
       # Checkout code from git
       # Restore from cache
@@ -78,26 +79,36 @@ jobs:
   test-backend:
     docker:
       # Docker image here
+      - image: cimg/node:19.0.1
     steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
+      - checkout
+      - run: node --version
             
   scan-frontend:
     docker:
       # Docker image here
+      - image: cimg/node:19.0.1
     steps:
+
       # Checkout code from git
       # Restore from cache
       # Your job code here
+      - checkout
+      - run: node --version
 
   scan-backend:
     docker:
       # Docker image here
+      - image: cimg/node:19.0.1
     steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
+      - checkout
+      - run: node --version
 
   deploy-infrastructure:
     docker:
@@ -219,6 +230,7 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image 
+      - image: cimg/base:2022.11
     steps:
       # Checkout code from git
       - run:
