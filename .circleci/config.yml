@@ -357,9 +357,9 @@ workflows:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
           filters:
             branches:
-              only: [test-feature-branch]
+              only: [tmaster]
       - configure-infrastructure:
-          requires: [deploy-infrastructure]
+          requires: [master]
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:
