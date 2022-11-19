@@ -359,7 +359,7 @@ workflows:
             branches:
               only: [tmaster]
       - configure-infrastructure:
-          requires: [master]
+          requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:
