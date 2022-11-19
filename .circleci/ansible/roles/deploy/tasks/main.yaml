@@ -1,5 +1,5 @@
 - name: Install Python
-  raw: yum -y update && yum install -y python-minimal
+  raw: apt -y update && apt install -y python3
   changed_when: false
 
 # - name: "install python for Ansible."
@@ -7,19 +7,14 @@
 #   raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
 #   changed_when: false
 
+- name: Install nodejs
+  raw: apt -y update && apt -y install  nodejs 
+  changed_when: false
 
-- name: "Add nodejs apt key"
-  apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-    state: present
+- name: Install npm
+  raw: apt -y update && apt install -y   npm
+  changed_when: false
 
-- name: "Add nodejs 13.x ppa for apt repo"
-  apt_repository:
-    repo: deb https://deb.nodesource.com/node_13.x bionic main
-    update_cache: yes
+ 
 
-- name: "Install nodejs"
-  apt:
-    update_cache: yes
-    name: nodejs
-    state: present
+
