@@ -290,8 +290,7 @@ jobs:
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
-            # cd frontend
-            # npm run build
+
       - run:
           name: Deploy frontend objects
           command: |
@@ -356,11 +355,21 @@ jobs:
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+            echo ${BACKEND_IP} > workspace/BACKEND_IP
+
+      - persist_to_workspace:
+          root: workspace
+          paths:
+              - BACKEND_IP
+
+      - attach_workspace:
+          at: /workspace
 
       - run:
           name: Backend smoke test.
           command: |
               # Fetch and prepare the BACKEND_IP env var
+              BACKEND_IP=$(cat workspace/BACKEND_IP)
               export API_URL="http://${BACKEND_IP}:3030"
               echo "${API_URL}"
               if curl "${API_URL}/api/status" | grep "ok"
