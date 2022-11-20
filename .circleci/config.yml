@@ -299,10 +299,11 @@ jobs:
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # Here's where you will add some code to rollback on failure   
-      - run:
-          name: destroy the environemtn
-          command: |   
+      # - run:
+      #     name: destroy the environemtn
+      #     command: |   
       -  destroy-environment
+
 
                     
   deploy-backend:
@@ -323,9 +324,9 @@ jobs:
           command: |
             # your code here
       # Here's where you will add some code to rollback on failure  
-      - run:
-          name: destroy the environemtn
-          command: |   
+      # - run:
+      #     name: destroy the environemtn
+      #     command: |   
       -  destroy-environment
 
   smoke-test:
