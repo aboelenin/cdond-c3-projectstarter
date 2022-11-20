@@ -355,10 +355,10 @@ jobs:
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
-            echo ${BACKEND_IP} > workspace/BACKEND_IP
+            echo ${BACKEND_IP} > BACKEND_IP
 
       - persist_to_workspace:
-          root: workspace
+          root: .
           paths:
               - BACKEND_IP
 
@@ -369,7 +369,7 @@ jobs:
           name: Backend smoke test.
           command: |
               # Fetch and prepare the BACKEND_IP env var
-              BACKEND_IP=$(cat workspace/BACKEND_IP)
+              BACKEND_IP=$(cat BACKEND_IP)
               export API_URL="http://${BACKEND_IP}:3030"
               echo "${API_URL}"
               if curl "${API_URL}/api/status" | grep "ok"
@@ -454,8 +454,8 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
       - smoke-test:
