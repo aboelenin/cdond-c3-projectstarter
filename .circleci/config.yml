@@ -363,7 +363,7 @@ jobs:
               - BACKEND_IP
 
       - attach_workspace:
-          at: /workspace
+          at: .
 
       - run:
           name: Backend smoke test.
