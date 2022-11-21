@@ -370,7 +370,7 @@ jobs:
       # - run:
       #     name: destroy the environemtn
       #     command: |   
-      -  destroy-environment
+      # -  destroy-environment
 
   smoke-test:
     docker:

@@ -1,4 +1,7 @@
 - name: Install Python
+  become: true
+  become_method: sudo
+  become_user: root
   raw: apt -y update && apt install -y python3
   changed_when: false
 
@@ -8,10 +11,16 @@
 #   changed_when: false
 
 - name: Install nodejs
+  become: true
+  become_method: sudo
+  become_user: root
   raw: apt -y update && apt -y install  nodejs 
   changed_when: false
 
 - name: Install npm
+  become: true
+  become_method: sudo
+  become_user: root
   raw: apt -y update && apt install -y   npm
   changed_when: false
 
