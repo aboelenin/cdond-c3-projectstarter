@@ -291,18 +291,20 @@ jobs:
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
 
-      - run:
-          name: Deploy frontend objects
-          command: |
-            #  curl -s https://deb.nodesource.com/setup_16.x | sudo bash
-            #   sudo apt install nodejs -y
-            node -v
-            cd frontend
-            npm install
-            npm run build
-            ls
-            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
-            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+      # - run:
+      #     name: Deploy frontend objects
+      #     command: |
+      #       #  curl -s https://deb.nodesource.com/setup_16.x | sudo bash
+      #       #   sudo apt install nodejs -y
+      #       node -v
+      #       cd frontend
+      #       npm install
+      #       npm run build
+      #       ls
+      #       tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+      #       aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+
+      
       # Here's where you will add some code to rollback on failure   
       # - run:
       #     name: destroy the environemtn
@@ -335,6 +337,9 @@ jobs:
       #       --filters "Name=tag:project,Values=udapeople"  \
       #       --output=text  >> .circleci/ansible/inventory.txt
       #         cat .circleci/ansible/inventory.txt
+      - add_ssh_keys:
+          fingerprints:
+            - "06:18:dc:e7:89:dc:65:d0:fa:42:51:1d:e4:0a:20:7c"
       - run:
           name: Deploy backend
           command: |
@@ -360,7 +365,7 @@ jobs:
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml
+            ansible-playbook -i inventory.txt deploy-backend.yml --private-key $CircleCI
       # Here's where you will add some code to rollback on failure  
       # - run:
       #     name: destroy the environemtn
