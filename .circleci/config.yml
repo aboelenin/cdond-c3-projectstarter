@@ -326,6 +326,15 @@ jobs:
           command: |
             sudo apt update -y && sudo apt install python tar && sudo apt install python3-pip
             sudo pip3 install ansible
+      # - run:
+      #     name: Add back-end ip to ansible inventory
+      #     command: |
+      #       # Your code here
+      #       aws ec2 describe-instances \
+      #       --query "Reservations[*].Instances[*].PublicIpAddress" \
+      #       --filters "Name=tag:project,Values=udapeople"  \
+      #       --output=text  >> .circleci/ansible/inventory.txt
+      #         cat .circleci/ansible/inventory.txt
       - run:
           name: Deploy backend
           command: |
@@ -335,6 +344,13 @@ jobs:
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
+             aws ec2 describe-instances \
+            --query "Reservations[*].Instances[*].PublicIpAddress" \
+            --filters "Name=tag:project,Values=udapeople"  \
+            --output=text  >> .circleci/ansible/inventory.txt
+            
+              cat .circleci/ansible/inventory.txt
+
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
