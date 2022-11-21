@@ -357,7 +357,7 @@ jobs:
             export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople"  --output=text)
             echo $BACKEND_IP
             echo $BACKEND_IP >> .circleci/ansible/inventory.txt
-            aws ec2 describe-instances \
+            
 
 
             cat .circleci/ansible/inventory.txt
