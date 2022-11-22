@@ -24,6 +24,11 @@
   raw: apt -y update && apt install -y   npm
   changed_when: false
 
+- name: Extract artifact
+  ansible.builtin.unarchive:
+    src: artifact.tar.gz
+    dest: .
+
  
 #  artifact.tar.gz
 
