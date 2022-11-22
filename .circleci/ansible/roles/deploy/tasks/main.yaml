@@ -41,9 +41,9 @@
   become_method: sudo
   become_user: root
   ansible.builtin.shell: |
-              npm install
-              npm i -g pm2
-              pm2 stop default
-              pm2 start npm -- start
+              npm install;
+              npm i -g pm2;
+              pm2 stop default;
+              nohup  pm2 start npm -- start &
 
 
