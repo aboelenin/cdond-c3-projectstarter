@@ -14,7 +14,6 @@
   become: true
   become_method: sudo
   become_user: root
-  no_output_timeout: 30m
   raw: apt -y update && apt -y install  nodejs 
   changed_when: false
 
@@ -22,10 +21,12 @@
   become: true
   become_method: sudo
   become_user: root
-  no_output_timeout: 30m
   raw: apt -y update && apt install -y   npm
   changed_when: false
 
  
+# npm install
+# pm2 stop default
+# pm2 start npm -- start
 
 
