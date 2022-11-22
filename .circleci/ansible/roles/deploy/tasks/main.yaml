@@ -37,6 +37,9 @@
 
 
 - name: start the app
+  become: true
+  become_method: sudo
+  become_user: root
   ansible.builtin.shell: |
               npm install
               npm i -g pm2
