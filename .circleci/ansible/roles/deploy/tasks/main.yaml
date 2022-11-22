@@ -25,9 +25,8 @@
   changed_when: false
 
 - name: Extract artifact
-  ansible.builtin.unarchive:
-    src: /home/ubuntu/artifact.tar.gz
-    dest: . 
+  ansible.builtin.shell: tar -xvf /home/ubuntu/artifact.tar.gz 
+
 
  
 #  artifact.tar.gz
