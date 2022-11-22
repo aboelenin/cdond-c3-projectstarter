@@ -361,7 +361,7 @@ jobs:
             tar -C backend -czvf artifact.tar.gz .
             export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople"  --output=text)
             echo $BACKEND_IP
-            scp ./artifact.tar.gz ubuntu@$BACKEND_IP:/
+            scp ./artifact.tar.gz ubuntu@$BACKEND_IP:
       - run:
           name: Run ansible playbook
           command: |
