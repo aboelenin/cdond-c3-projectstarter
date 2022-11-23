@@ -45,6 +45,6 @@
               npm i -g pm2;
               pm2 stop default;
               # nohup  pm2 start npm -- start &
-              daemonize -e /var/log/syslog -o /var/log/syslog  pm2 start npm -- start
+              pm2 start npm -- start  </dev/null >/dev/null 2>&1 &
 
 
