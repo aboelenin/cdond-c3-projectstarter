@@ -240,10 +240,10 @@ jobs:
           command: |
             export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople"  --output=text)
             echo $BACKEND_IP
-            echo $BACKEND_IP >> .circleci/ansible/inventory.txt
+            # echo $BACKEND_IP >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
             cd .circleci/ansible
-            ansible-playbook -i ~/inventory.txt configure-server.yml
+            ansible-playbook -i ~/.circleci/ansible/inventory.txt configure-server.yml
           no_output_timeout: 20m
 
 
