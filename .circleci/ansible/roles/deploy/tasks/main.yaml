@@ -25,16 +25,17 @@
 #   # changed_when: false
   
 
-- name: install global packages
+- name: install node 
+  shell: |
+    curl -fsSL https://deb.nodesource.com/setup_13.8 | sudo -E bash - &&sudo apt-get install -y nodejs
 
+- name: install global packages
   apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
   become: True
   become_method: sudo
   with_items:
-    - python
-    - nodejs
+    - python3
     - npm
-
 
 
 
@@ -42,24 +43,18 @@
   ansible.builtin.shell: tar -xvf /home/ubuntu/artifact.tar.gz 
 
 
- 
-#  artifact.tar.gz
 
-# npm install
-# pm2 stop default
-# pm2 start npm -- start
-
-
+- name: Extract artifact
+  ansible.builtin.shell: tar -xvf /home/ubuntu/artifact.tar.gz 
 - name: start the app
   become: true
   become_method: sudo
-  become_user: root
+  # become_user: root
   ansible.builtin.shell: |
-              npm install
-              npm i -g pm2
-              pm2 stop default
-              pm2 start npm -- start 
-              # nohup  pm2 start npm -- start &
-              pm2 start npm -- start  </dev/null >/dev/null 2>&1 &
-
+    npm install
+    sudo npm i -g pm2
+    pm2 stop default
+    pm2 start npm -- start 
+    # nohup  pm2 start npm -- start &
+    pm2 start npm -- start  </dev/null >/dev/null 2>&1 &
 
