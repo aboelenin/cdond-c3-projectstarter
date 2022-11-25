@@ -211,13 +211,19 @@ jobs:
   configure-infrastructure:
     docker: 
     # - image:  ansible/ansible
+              
+    # Checkout code from git
+    # Add ssh keys with fingerprint
+    # attach workspace
+
     - image: cimg/python:3.11.0
     steps:
       - checkout
-          
-      # Checkout code from git
-      # Add ssh keys with fingerprint
-      # attach workspace
+
+      - add_ssh_keys:
+          fingerprints:
+            - "06:18:dc:e7:89:dc:65:d0:fa:42:51:1d:e4:0a:20:7c"
+
       - run:
           name: Install dependencies
           command: |
@@ -232,6 +238,9 @@ jobs:
       - run:
           name: Configure server
           command: |
+            export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople"  --output=text)
+            echo $BACKEND_IP
+            echo $BACKEND_IP >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
             cd .circleci/ansible
             ansible-playbook -i ~/inventory.txt configure-server.yml
