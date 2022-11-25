@@ -4,7 +4,6 @@
   become_user: root
   raw: apt -y update && apt install -y python3
   changed_when: false
-  no_output_timeout: 30m
 
 # - name: "install python for Ansible."
 #   become: true
@@ -17,7 +16,6 @@
   become_user: root
   raw: apt -y update && apt -y install  nodejs 
   changed_when: false
-  no_output_timeout: 30m
 
 - name: Install npm
   become: true
@@ -25,7 +23,7 @@
   become_user: root
   raw: apt -y update && apt install -y   npm
   changed_when: false
-  no_output_timeout: 30m
+  
 
 - name: Extract artifact
   ansible.builtin.shell: tar -xvf /home/ubuntu/artifact.tar.gz 
