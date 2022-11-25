@@ -380,7 +380,7 @@ jobs:
       #     name: destroy the environemtn
       #     command: |   
       # -  destroy-environment
-
+#
   smoke-test:
     docker:
       # Lightweight Docker image 
