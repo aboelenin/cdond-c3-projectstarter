@@ -374,7 +374,7 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml 
-          no_output_timeout: 20m
+          no_output_timeout: 50m
       # Here's where you will add some code to rollback on failure  
       # - run:
       #     name: destroy the environemtn
