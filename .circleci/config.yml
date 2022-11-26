@@ -326,10 +326,14 @@ jobs:
             - "06:18:dc:e7:89:dc:65:d0:fa:42:51:1d:e4:0a:20:7c"
       - attach_workspace:
           at: ~/
-
+      - run:
+                name: Deploy backend
+                command: |
+                  apt update -y&& apt install install nodejs npm -y
       - run:
           name: Deploy backend
           command: |
+
             cd backend
             npm i
             npm run build
