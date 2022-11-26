@@ -1,3 +1,10 @@
+- name: "copy app"
+  ansible.builtin.copy:
+        src: ./artifact.tar.gz
+        dest: ~/artifact.tar.gz
+
+
+
 - name: Extract artifact
   ansible.builtin.shell: tar -xvf /home/ubuntu/artifact.tar.gz 
 
@@ -14,4 +21,6 @@
     pm2 start npm -- start 
     # nohup  pm2 start npm -- start &
     pm2 start npm -- start  </dev/null >/dev/null 2>&1 &
+
+
 
