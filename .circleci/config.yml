@@ -220,9 +220,7 @@ jobs:
     steps:
       - checkout
 
-      - add_ssh_keys:
-          fingerprints:
-            - "06:18:dc:e7:89:dc:65:d0:fa:42:51:1d:e4:0a:20:7c"
+      
 
       - run:
           name: Install dependencies
@@ -234,7 +232,9 @@ jobs:
             sudo ./aws/install
       - attach_workspace:
           at: ~/
-
+      - add_ssh_keys:
+          fingerprints:
+            - "06:18:dc:e7:89:dc:65:d0:fa:42:51:1d:e4:0a:20:7c"
       - run:
           name: Configure server
           command: |
