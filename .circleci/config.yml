@@ -80,7 +80,7 @@ jobs:
   test-frontend:
     docker:
       # Docker image here
-      - image: cimg/node:16.13.0
+      - image: cimg/node:13.8.0
     steps:
       # Checkout code from git
       # Restore from cache
@@ -100,7 +100,7 @@ jobs:
   test-backend:
     docker:
       # Docker image here
-      - image: cimg/node:16.13.0
+      - image: cimg/node:13.8.0
     steps:
       # Checkout code from git
       # Restore from cache
@@ -120,7 +120,7 @@ jobs:
   scan-frontend:
     docker:
       # Docker image here
-      - image: cimg/node:16.13.0
+      - image: cimg/node:13.8.0
     steps:
 
       # Checkout code from git
@@ -145,7 +145,7 @@ jobs:
   scan-backend:
     docker:
       # Docker image here
-      - image: cimg/node:16.13.0     ## install python too manually here 
+      - image: cimg/node:13.8.0     ## install python too manually here 
     steps:
       # Checkout code from git
       # Restore from cache
@@ -208,6 +208,7 @@ jobs:
             - project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure      
 
+
   configure-infrastructure:
     docker: 
     # - image:  ansible/ansible
@@ -219,51 +220,28 @@ jobs:
     - image: cimg/python:3.11.0
     steps:
       - checkout
-
-      
-
       - run:
           name: Install dependencies
           command: |
             sudo apt update ; sudo apt install ansible tar gzip
             ansible --version
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
+
       - attach_workspace:
           at: ~/
       - add_ssh_keys:
           fingerprints:
             - "06:18:dc:e7:89:dc:65:d0:fa:42:51:1d:e4:0a:20:7c"
       - run:
-          name: Deploy backend
-          command: |
-            cd backend
-            npm i
-            npm run build
-            cd ..
-            # Zip the directory
-            tar -C backend -czvf artifact.tar.gz .
-            export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople"  --output=text)
-            echo $BACKEND_IP
-            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  ./artifact.tar.gz ubuntu@$BACKEND_IP:
-
-      - run:
           name: Configure server
           command: |
-            # export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople"  --output=text)
-            # echo $BACKEND_IP
-            # echo $BACKEND_IP >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
             cd .circleci/ansible
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt configure-server.yml
-          no_output_timeout: 20m
-
-
+          
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
-       - image: cimg/node:16.13.0
+       - image: cimg/node:13.8.0
     steps:
       
       - checkout
@@ -291,7 +269,7 @@ jobs:
     docker:
       # Docker image here that supports AWS CLI
       
-      - image: cimg/node:16.13.0
+      - image: cimg/node:13.8.0
       # - image: cimg/aws:2022.11
     steps:
       - checkout
@@ -339,40 +317,18 @@ jobs:
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
-      #  - image: cimg/python:3.11.0
-       - image: cimg/node:16.13.0
+       - image: cimg/python:3.11.0
     steps:
       # Checkout code from git
       - checkout
       # Add ssh keys with fingerprint
       # attach workspace
-      - run:
-          name: Install dependencies
-          command: |
-            sudo apt update -y && sudo apt install python tar && sudo apt install python3-pip
-            sudo pip3 install ansible
-      # - run:
-      #     name: Add back-end ip to ansible inventory
-      #     command: |
-      #       # Your code here
-      #       aws ec2 describe-instances \
-      #       --query "Reservations[*].Instances[*].PublicIpAddress" \
-      #       --filters "Name=tag:project,Values=udapeople"  \
-      #       --output=text  >> .circleci/ansible/inventory.txt
-      #         cat .circleci/ansible/inventory.txt
       - add_ssh_keys:
           fingerprints:
             - "06:18:dc:e7:89:dc:65:d0:fa:42:51:1d:e4:0a:20:7c"
-      - run:
-          name: install amazon CLI
-          command: | 
-            sudo apt update && sudo apt install  curl tar 
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
+      - attach_workspace:
+          at: ~/
 
-
-            
       - run:
           name: Deploy backend
           command: |
@@ -382,20 +338,15 @@ jobs:
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
-            export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople"  --output=text)
-            echo $BACKEND_IP
             scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  ./artifact.tar.gz ubuntu@$BACKEND_IP:
       - run:
           name: Run ansible playbook
           command: |
-            export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople"  --output=text)
-            echo $BACKEND_IP
-            echo $BACKEND_IP >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
-            ansible-playbook  -vvv -i inventory.txt deploy-backend.yml 
+            ansible-playbook  -i inventory.txt deploy-backend.yml 
           # no_output_timeout: 50m
       # Here's where you will add some code to rollback on failure  
       # - run:
