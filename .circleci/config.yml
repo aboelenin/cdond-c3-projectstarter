@@ -236,6 +236,19 @@ jobs:
           fingerprints:
             - "06:18:dc:e7:89:dc:65:d0:fa:42:51:1d:e4:0a:20:7c"
       - run:
+          name: Deploy backend
+          command: |
+            cd backend
+            npm i
+            npm run build
+            cd ..
+            # Zip the directory
+            tar -C backend -czvf artifact.tar.gz .
+            export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople"  --output=text)
+            echo $BACKEND_IP
+            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  ./artifact.tar.gz ubuntu@$BACKEND_IP:
+
+      - run:
           name: Configure server
           command: |
             # export BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople"  --output=text)
@@ -246,7 +259,7 @@ jobs:
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt configure-server.yml
           no_output_timeout: 20m
 
-#
+
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
