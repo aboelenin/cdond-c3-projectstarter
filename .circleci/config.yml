@@ -243,10 +243,10 @@ jobs:
             # echo $BACKEND_IP >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
             cd .circleci/ansible
-            ansible-playbook -i inventory.txt configure-server.yml
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt configure-server.yml
           no_output_timeout: 20m
 
-
+#
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
