@@ -135,7 +135,7 @@ jobs:
           command: |
                 cd frontend
                 npm install
-                # npm audit fix --audit-level=critical --force
+                npm audit fix --audit-level=critical --force
                 # npm audit fix --audit-level=critical --force
                 # npm audit fix --audit-level=critical --force
                 # If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
@@ -159,7 +159,7 @@ jobs:
           command: |
                 cd backend
                 npm install
-                # npm audit fix --audit-level=critical --force
+                npm audit fix --audit-level=critical --force
                 # npm audit fix --audit-level=critical --force
                 # # If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
                 # npm audit --audit-level=critical
@@ -310,7 +310,6 @@ jobs:
       #     command: |   
       -  destroy-environment
 
-
                     
   deploy-backend:
     docker:
@@ -354,7 +353,7 @@ jobs:
       #     name: destroy the environemtn
       #     command: |   
       -  destroy-environment
-#
+
   smoke-test:
     docker:
       # Lightweight Docker image 
