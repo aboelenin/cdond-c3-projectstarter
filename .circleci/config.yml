@@ -339,7 +339,7 @@ jobs:
             npm run build
             cd ..
             # Zip the directory
-            tar -C backend -czvf artifact.tar.gz .
+            tar -C backend -czvf ~/artifact.tar.gz .
             # scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  ./artifact.tar.gz ubuntu@$BACKEND_IP:
       - run:
           name: Run ansible playbook
