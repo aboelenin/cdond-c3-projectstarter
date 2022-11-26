@@ -329,7 +329,7 @@ jobs:
       - run:
                 name: Deploy backend
                 command: |
-                  sudo apt update -y&& sudo pt install install ansible nodejs npm -y
+                  sudo apt update -y&& sudo apt  install ansible nodejs npm -y
       - run:
           name: Deploy backend
           command: |
