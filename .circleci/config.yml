@@ -324,10 +324,10 @@ jobs:
           fingerprints:
             - "06:18:dc:e7:89:dc:65:d0:fa:42:51:1d:e4:0a:20:7c"
 
-      # - run:
-      #           name: Deploy backend
-      #           command: |
-      #             sudo apt update -y&& sudo apt  install ansible nodejs npm -y
+      - run:
+                name: Deploy backend
+                command: |
+                  sudo apt update -y&& sudo apt  install -y  ansible  # nodejs npm 
       - restore_cache:
           keys:     
             - backend-build
