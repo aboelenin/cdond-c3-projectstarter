@@ -323,23 +323,28 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "06:18:dc:e7:89:dc:65:d0:fa:42:51:1d:e4:0a:20:7c"
-      - attach_workspace:
-          at: ~/
+
       - run:
                 name: Deploy backend
                 command: |
-                  sudo apt update -y&& sudo apt  install ansible nodejs npm -y
+                  sudo apt update -y  && sudo apt  install -y  ansible  # nodejs npm 
+      - restore_cache:
+          keys:     
+            - backend-build
+
       - run:
           name: Deploy backend
           command: |
 
-            cd backend
-            npm i
-            npm run build
-            cd ..
+            # cd backend
+            # npm i
+            # npm run build
+            # cd ..
             # Zip the directory
             tar -C backend -czvf ~/artifact.tar.gz .
             # scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  ./artifact.tar.gz ubuntu@$BACKEND_IP:
+      - attach_workspace:
+          at: ~/
       - run:
           name: Run ansible playbook
           command: |
@@ -410,6 +415,8 @@ jobs:
               else
                 return 1
               fi
+      
+      -  destroy-environment
 
 
   cloudfront-update:
