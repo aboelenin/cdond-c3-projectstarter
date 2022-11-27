@@ -327,7 +327,7 @@ jobs:
       - run:
                 name: Deploy backend
                 command: |
-                  sudo apt update -y&& sudo apt  install -y  ansible  # nodejs npm 
+                  sudo apt update -y  && sudo apt  install -y  ansible  # nodejs npm 
       - restore_cache:
           keys:     
             - backend-build
