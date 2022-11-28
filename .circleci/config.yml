@@ -8,9 +8,10 @@ commands:
       # Add parameter here   
     steps:
       - run:
-                  name: Delete S3 files
-                  command: |
-                    aws s3 rm "s3://udapeople-frontend-${CIRCLE_WORKFLOW_ID}" --recursive
+          name: Delete S3 files
+          when: on_fail
+          command: |
+            aws s3 rm "s3://udapeople-frontend-${CIRCLE_WORKFLOW_ID}" --recursive
       
       - run:
           name: Destroy environments
