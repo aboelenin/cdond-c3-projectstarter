@@ -491,15 +491,7 @@ jobs:
         - run:
             name: Remove old stacks and files
             command: |
-              # if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
-              # then
-              #   # your code here
-              # fi
-              # You can use any condition like:
-              # if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
-              # if [[ "${OldWorkflowID}" != "${STACKS[@]}"  ]]
-
-              OldWorkflowID= $(cat OldWorkflowID)
+              OldWorkflowID=$(cat OldWorkflowID)
 
               echo "${CIRCLE_WORKFLOW_ID}" 
               echo "${OldWorkflowID}"  
@@ -516,6 +508,17 @@ jobs:
               else
               echo "____________________________Cannot delete____________________________" 
               fi
+
+
+# if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+# then
+#   # your code here
+# fi
+# You can use any condition like:
+# if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
+# if [[ "${OldWorkflowID}" != "${STACKS[@]}"  ]]
+
+
 
 workflows:
   default:
