@@ -484,14 +484,15 @@ jobs:
               # fi
               # You can use any condition like:
               # if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
-              # if [[ "${OldWorkflowID}" =~ "${STACKS[@]}"  ]]
-              if [[ "${CIRCLE_WORKFLOW_ID:0:7}" =~ "${OldWorkflowID}" ]]
+              # if [[ "${OldWorkflowID}" != "${STACKS[@]}"  ]]
+              if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
               then
+              echo "____________________________deleteing____________________________" 
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
               else
-              echo Cannot delete 
+              echo "____________________________Cannot delete____________________________" 
               fi
 
 workflows:
@@ -525,6 +526,6 @@ workflows:
           requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
           requires: [smoke-test]
-      # - cleanup:
-      #     requires: [cloudfront-update]
-      ##
+      - cleanup:
+          requires: [cloudfront-update]
+      
