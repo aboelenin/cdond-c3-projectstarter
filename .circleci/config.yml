@@ -450,6 +450,8 @@ jobs:
       - destroy-environment
       - revert-migrations:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+        
+
 
 
   cleanup:
@@ -473,7 +475,18 @@ jobs:
               # Fetch the stack names          
               export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
                       --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
-              echo Stack names: "${STACKS[@]}"          
+              echo Stack names: "${STACKS[@]}"    
+
+
+
+              echo ${OldWorkflowID} > workspace/OldWorkflowID
+
+        - persist_to_workspace:
+                root: workspace
+                paths:
+                    - OldWorkflowID
+        - attach_workspace:
+                at: /workspace
 
         - run:
             name: Remove old stacks and files
@@ -485,10 +498,12 @@ jobs:
               # You can use any condition like:
               # if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
               # if [[ "${OldWorkflowID}" != "${STACKS[@]}"  ]]
-              echo "${CIRCLE_WORKFLOW_ID}" \n
-              echo "${OldWorkflowID}" \n 
+
+              OldWorkflowID= $(cat workspace/OldWorkflowID)
+
+              echo "${CIRCLE_WORKFLOW_ID}" 
+              echo "${OldWorkflowID}"  
               echo "#########################"
-              echo Stack names: "${STACKS[@]}" 
               echo OldWorkflowID: "${OldWorkflowID}"
               echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
               echo "#########################"
