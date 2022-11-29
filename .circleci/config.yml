@@ -485,8 +485,13 @@ jobs:
               # You can use any condition like:
               # if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
               # if [[ "${OldWorkflowID}" != "${STACKS[@]}"  ]]
-              echo "${CIRCLE_WORKFLOW_ID}"
-              echo "${OldWorkflowID}"
+              echo "${CIRCLE_WORKFLOW_ID}" \n
+              echo "${OldWorkflowID}" \n 
+              echo "#########################"
+              echo Stack names: "${STACKS[@]}" 
+              echo OldWorkflowID: "${OldWorkflowID}"
+              echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
+              echo "#########################"
               if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
               then
               echo "____________________________deleteing____________________________" 
