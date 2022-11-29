@@ -485,7 +485,7 @@ jobs:
               # You can use any condition like:
               # if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
               # if [[ "${OldWorkflowID}" != "${STACKS[@]}"  ]]
-              if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
+              if [[ "${CIRCLE_WORKFLOW_ID}" != "${OldWorkflowID}" ]]
               then
               echo "____________________________deleteing____________________________" 
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
@@ -510,7 +510,7 @@ workflows:
           requires: [build-frontend]
 
       - deploy-infrastructure:
-          # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
           filters:
             branches:
               only: [master]
