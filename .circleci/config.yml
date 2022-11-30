@@ -484,7 +484,7 @@ jobs:
       steps:
         # Checkout code from git
         - attach_workspace:
-              at: ~/
+              at: .
 
 
         - run:
