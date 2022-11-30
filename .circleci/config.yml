@@ -454,7 +454,7 @@ jobs:
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
                     --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
             echo Stack names: "${STACKS[@]}"    
-            echo ${OldWorkflowID} > OldWorkflowID
+            echo "${OldWorkflowID}" > OldWorkflowID
 
       - persist_to_workspace:
               root: .
@@ -482,6 +482,7 @@ jobs:
         # Docker image here
         - image: cimg/aws:2022.11
       steps:
+        - checkout
         # Checkout code from git
         - attach_workspace:
               at: .
