@@ -499,7 +499,7 @@ jobs:
               echo OldWorkflowID: "${OldWorkflowID}"
               echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
               echo "#########################"
-              if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
+              if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]] && [ -z "${OldWorkflowID}" ]
               then
               echo "____________________________deleteing____________________________" 
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
@@ -509,14 +509,6 @@ jobs:
               echo "____________________________Cannot delete____________________________" 
               fi
 
-#
-# if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
-# then
-#   # your code here
-# fi
-# You can use any condition like:
-# if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
-# if [[ "${OldWorkflowID}" != "${STACKS[@]}"  ]]
 
 
 
