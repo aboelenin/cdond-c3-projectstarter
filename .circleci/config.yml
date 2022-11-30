@@ -499,7 +499,7 @@ jobs:
               echo OldWorkflowID: "${OldWorkflowID}"
               echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
               echo "#########################"
-              if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]] && [ -z "${OldWorkflowID}" ]
+              if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]] && [ -n "${OldWorkflowID}" ]
               then
               echo "____________________________deleteing____________________________" 
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
