@@ -17,6 +17,7 @@
   copy:
     src: node_exporter.service
     dest: /etc/systemd/system/
+    
 
 - name: "enable node_exporter service"
   become: true
@@ -25,3 +26,5 @@
     daemon_reload: yes
     name: node_exporter
     enabled: yes
+
+# VS Code Extension Version: 1.2.0
